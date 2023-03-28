@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 2</h1>
+		<p>Дано інформацію про прибуток К магазинів протягом тижня. Знайти:<br>
+			1) загальний прибуток кожного масиву за тиждень;<br>
+			2)загальний прибуток усіх магазинів по дням (загальний прибуток усіх магазинів за понеділок, за вівторок, і т.д.);<br>
+			3)загальний прибуток за робочі дні<br>
+			4)загальний прибуток за вихідні дні<br>
+			5)максимальний прибуток за середу<br>
+			6)сформувати загальний список (одновимірний масив) зі значенням, які що більші за 200<br>
+			7)відсортувати кожен тиждень за зростанням<br>
+			8) відсортувати тижні (рядки) за спаданням максимального елементи у цьому тижні (рядку), тобто при порівнянні рядків потрібно порівнювати максимальні елементи у кожному з цих рядків<br>
+			9) упорядкувати тижні (рядки) за спаданням суми елементів у рядку (тобто при порівнянні двох рядків треба знайти суму кожного з рядків і порівнювати ці суми, на основі цих сум буде зрозуміло, який з елементів повинен іти раніше).
+		</p>
+		<script>
+			// 1. Вводимо необхідні дані
+			const MinProfitValue = 1
+			const MaxProfitValue = 10000
+
+			const daysWeek = 7
+			let K = parseInt(prompt('Введіть кількість магазинів'))
+
+			function generateRandomProfit(minValue, MaxValue) {
+				return MinProfitValue + Math.floor(Math.random()*MaxProfitValue)
+			}
+
+			function generateRandomArray(profit, minValue, MaxValue) {
+				const arrProfit = []
+				for (let i = 0; i < daysWeek; i++) {
+					const randomProfit = generateRandomProfit(minValue, MaxValue)
+					arrProfit.push(randomProfit)					
+				}
+				return arrProfit
+			}
+
+			function generateWeekProfitTable(rowsProfit, columnsProfit, minValue, MaxValue) {
+				const table = []
+				for (let i = 0; i < K; i++) {
+					const dayProfit = generateRandomArray(columnsProfit, minValue, MaxValue)
+					table.push(dayProfit)
+				}
+				return table
+			}
+
+			let weekProfitArr = generateWeekProfitTable(K, daysWeek, MinProfitValue, MaxProfitValue)
+			// 2. Робимо обчислення та виводимо результат 
+
+			//===================================1=================================================
+			
+			
+			
+			let sumEveryShopProfitPerWeek = weekProfitArr.map(element=>{
+				let sum = element.reduce((prev, element)=>prev = prev+element)
+				return sum
+			})
+			//===================================2=================================================
+			
+			function getSumAllShopsDayProfitPerWeek(table) {
+				let tempArr = []
+				for (let rowNumber = 0; rowNumber < table[0].length; rowNumber++) {
+					let sum = 0
+					for (let columnNumber = 0; columnNumber < table.length; columnNumber++) {
+						sum += table[columnNumber][rowNumber];
+					}	
+					tempArr.push(sum)
+				}
+				return tempArr
+			}
+			let sumAllShopsDayProfitPerWeek = getSumAllShopsDayProfitPerWeek(weekProfitArr)
+			// console.log(sumAllShopsDayProfitPerWeek)
+
+			//===================================3=================================================
+			
+			function getSumWorkingDaysShopsProfit(table) {
+				let sum = 0
+				for (let columnNumber = 0; columnNumber < daysWeek-2; columnNumber++) {
+					for (let rowNumber = 0; rowNumber < table.length; rowNumber++) {
+						sum = sum + table[rowNumber][columnNumber]
+					}
+				}
+				return sum
+			}
+
+			let sumWorkingDaysShopsProfit = getSumWorkingDaysShopsProfit(weekProfitArr)
+			// console.log(sumWorkingDaysShopsProfit)
+			
+			//===================================4=================================================
+			
+			function getDaysOffShopsProfit(table) {
+				let sum = 0
+				for (let columnNumber = daysWeek-2; columnNumber < daysWeek; columnNumber++) {
+					for (let rowNumber = 0; rowNumber < table.length; rowNumber++) {
+						sum = sum + table[rowNumber][columnNumber]
+					}
+				}
+				return sum
+			}
+
+			let daysOffShopsProfit = getDaysOffShopsProfit(weekProfitArr)
+			
+			//===================================5=================================================
+			
+				let maxProfitWednesday = Math.max(...weekProfitArr.map(element=>element[2]))
+				
+
+			//===================================6=================================================
+			
+			// let profitListValueBigger_200 = weekProfitArr.map((element,index)=> element = element[index]>200)
+			function getProfitListValueBigger_200(table) {
+				let tempArr =[]
+				for (let rowNumber = 0; rowNumber < table.length; rowNumber++) {
+					for (let columnNumber = 0; columnNumber < table[rowNumber].length; columnNumber++) {
+						if (table[rowNumber][columnNumber]>200) tempArr.push(table[rowNumber][columnNumber])
+					}
+					
+				}
+				return tempArr
+			}
+
+			let profitListValueBigger_200 = getProfitListValueBigger_200(weekProfitArr)
+			// console.log(profitListValueBigger_200)
+			//===================================7=================================================
+			
+			
+			function getProfitShopGrowingPerWeek(table) {
+				let tempArr =[]
+				for (let rowNumber = 0; rowNumber < table.length; rowNumber++) {
+					for (let columnNumber = 0; columnNumber < table[rowNumber].length; columnNumber++) {
+						tempArr.push(table[rowNumber][columnNumber])
+					}	
+				}
+				return tempArr
+			}
+			let profitShopGrowingPerWeek = getProfitShopGrowingPerWeek(weekProfitArr)
+			profitShopGrowingPerWeek.sort((el1,el2)=>el1-el2)
+			// console.log(profitShopGrowingPerWeek);
+			//===================================8=================================================
+			let copyOfCurrentArr = JSON.parse(JSON.stringify(weekProfitArr))
+			let rowsDecreasingofMaxElement = copyOfCurrentArr.sort((el1,el2)=> Math.max(...el2)-Math.max(...el1))
+			//console.log(rowsDecreasingofMaxElement);
+
+			//===================================9=================================================
+			copyOfCurrentArr
+			let rowsDecreasingofRowSum = copyOfCurrentArr.sort((el1,el2)=> el2.reduce((prev,el)=>prev+=el) - el1.reduce((prev,el)=>prev+=el))
+			// console.log(rowsDecreasingofRowSum)
+
+			
+			// console.log(weekProfitArr)
+			document.write(`<p><span class="title-lesson-11-tasks">Вихідний масив:</span> ${weekProfitArr}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.1:</span> ${sumEveryShopProfitPerWeek}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.2:</span> ${sumAllShopsDayProfitPerWeek}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.3:</span> ${sumWorkingDaysShopsProfit}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.4:</span> ${daysOffShopsProfit}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.5:</span> ${maxProfitWednesday}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.6:</span> ${profitListValueBigger_200}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.7:</span> ${profitShopGrowingPerWeek}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.8:</span> ${rowsDecreasingofMaxElement}</p>`)
+			document.write(`<p><span class="title-lesson-11-tasks">Задача 2.9:</span> ${rowsDecreasingofRowSum}</p>`)
+			
+		</script>
+	</body>
+</html>

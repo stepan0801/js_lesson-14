@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 3</h1>
+		<p>Морський бій. Випадковим чином на двовимірному полі розміром 6*6 розташовується 5 кораблів. Користувач стріляє вказуючи координати. Гра продовжується поки не потоплено усі кораблі або у користувача не закінчаться снаряди.</p>
+		<script>
+			// 1. Створюємо поле для гри
+			
+		  const tableNumber = 6
+		  const shipQuantity = 5
+			function generateRandomProfit(minValue, MaxValue) {
+					return minValue + Math.floor(Math.random()*MaxValue)
+				}
+
+			function generateRandomArray(element, minValue, MaxValue) {
+				const arr = []
+				for (let i = 0; i < tableNumber; i++) {
+					let currentValue = 0 
+					arr.push(currentValue)					
+				}
+				return arr
+			}
+
+			function generateEmptyGameField(rows, columns, minValue, MaxValue) {
+				const table = []
+				for (let i = 0; i < tableNumber; i++) {
+					const currentArr = generateRandomArray(columns, minValue, MaxValue)
+					table.push(currentArr)
+				}
+				return table
+			}
+			let emptyGameField = generateEmptyGameField(tableNumber,tableNumber)
+			// console.log(emptyGameField);
+
+			function createGameField(table, shipsNumber, minValue, MaxValue) {
+				let shipCounting = 0
+				do {let rowElementPosition = generateRandomProfit(0, tableNumber)
+					let columnElementPosition = generateRandomProfit(0, tableNumber)
+					if (table[rowElementPosition][columnElementPosition]===0) {
+						table[rowElementPosition][columnElementPosition] = 1
+						shipCounting++
+					}
+				} while (shipCounting<shipQuantity);
+				return table
+			}
+			let gameField = createGameField(emptyGameField,shipQuantity,0,tableNumber)
+			// console.log(gameField);
+			// 2. Створюємо функціонал самої гри 
+			function getPlayGame(table, shipQuantity) {
+				let userStrikeQuantity = parseInt(prompt('введіть кількість пострілів'))
+				do {
+					const userStrikeRow = parseInt(prompt('введіть номер клітики по горизонталі',`1-${tableNumber}`))-1
+					const userStrikeColumn = parseInt(prompt('введіть номер клітики по вертикалі',`1-${tableNumber}`))-1
+					if (table[userStrikeRow][userStrikeColumn] ===1) {
+						shipQuantity--
+						
+						alert('strike)))')
+						table[userStrikeRow][userStrikeColumn] = 0
+						
+					} else {
+						alert('miss(((')
+					}
+					userStrikeQuantity--
+				} while (shipQuantity > 0 && userStrikeQuantity > 0 )
+				if(shipQuantity===0) return alert('Win')
+				if (userStrikeQuantity===0) return alert('Loose')
+			}
+
+			let playGame = getPlayGame(gameField, shipQuantity)
+			// console.log(playGame);
+		</script>
+	</body>
+</html>

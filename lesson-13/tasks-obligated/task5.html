@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 5</h1>
+		<p> Тренажер додавання. Кожні 10 секунд користувачу задають випадковий приклад з додавання двох цифр і робиться перевірка.</p>
+		<script>
+			// 1. Вводимо необхідні дані
+			
+			function getRandomNum(minValue, maxValue) {
+				let someNum = minValue + Math.floor(Math.random() * maxValue)
+				return someNum
+			}
+
+			const minNum = 1
+			const maxNum = 100
+			const intervalTime = 10000
+
+			function getRandomSum(minValue, maxValue) {
+			let randomNum1 = getRandomNum(minValue, maxValue)
+			let randomNum2 = getRandomNum(minValue, maxValue)
+			// console.log(randomNum);
+			let validSum = randomNum1 + randomNum2
+			let sum = parseInt(prompt(`${randomNum1} + ${randomNum2} = ''`))
+			if (sum === validSum) alert('Правильно')
+			else alert('Неправильно')
+			}
+
+			let currentInterval = setInterval(() => {
+				getRandomSum(minNum, maxNum)
+			}, intervalTime);
+
+			// 2. Робимо обчислення та виводимо результат 
+
+			
+		</script>
+	</body>
+</html>

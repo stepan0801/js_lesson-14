@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 1</h1>
+		<p>Описати масив об’єктів – сайтів розроблених компанією з такими властивостями<br>
+			----- Властивості ------<br>
+			назва компанії на час розробки (назву періодично змінюють)<br>
+			власник компанії<br>
+			споснсори (масив спонсорів)<br>
+			* прізвище спонсора<br>
+			* ім’я спонсора<br>
+			* сума вкладень спонсора<br>
+			рік випуску<br>
+			вартість сайту<br>
+			Знайти:<br>
+			1) загальну вартість усіх сайтів<br>
+			2) кількість сайтів, що було зроблено між 2000 та 2009 рр.<br>
+			3) кількість сайтів, де сума спонсорських вкладень була більшою за 100000<br>
+			4) створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив)<br>
+			5) знайти рік, коли прибуток був найбільшим<br>
+			6) упорядкувати список за спаданням прибутку<br>
+			7) Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000 і більше 10000</p>
+		<script>
+			// Вводимо необхідні дані для створення масиву з даними
+			let webSitesList =[
+				{
+					title: 'ukr.net',
+					owner: 'Steven',
+					sponsors: [
+						{
+							secondName: 'S11',
+							firstName: 'F11',
+							invest: 110000
+						},
+						{
+							secondName: 'S12',
+							firstName: 'F12',
+							invest: 18000
+						},
+						{
+							secondName: 'S13',
+							firstName: 'F13',
+							invest: 4000
+						}
+					],
+					developYear: 2000,
+					price: 200000
+				},
+				{
+					title: 'football.ua',
+					owner: 'Alex',
+					sponsors: [
+						{
+							secondName: 'S21',
+							firstName: 'F21',
+							invest: 11000
+						},
+						{
+							secondName: 'S22',
+							firstName: 'F22',
+							invest: 17000
+						},
+						{
+							secondName: 'S23',
+							firstName: 'F23',
+							invest: 21000
+						}
+					],
+					developYear: 2006,
+					price: 180000
+				},
+				{
+					title: 'google.com',
+					owner: 'Andrew',
+					sponsors: [
+						{
+							secondName: 'S31',
+							firstName: 'F31',
+							invest: 14000
+						},
+						{
+							secondName: 'S32',
+							firstName: 'F32',
+							invest: 9000
+						},
+						{
+							secondName: 'S33',
+							firstName: 'F33',
+							invest: 7000
+						}
+					],
+					developYear: 2008,
+					price: 90000
+				},
+				{
+					title: 'youtube.com',
+					owner: 'Peter',
+					sponsors: [
+						{
+							secondName: 'S41',
+							firstName: 'F41',
+							invest: 19000
+						},
+						{
+							secondName: 'S42',
+							firstName: 'F42',
+							invest: 13000
+						},
+						{
+							secondName: 'S43',
+							firstName: 'F43',
+							invest: 2000
+						}
+					],
+					developYear: 2010,
+					price: 190000
+				},
+				{
+					title: 'instagram.com',
+					owner: 'Michael',
+					sponsors: [
+						{
+							secondName: 'S51',
+							firstName: 'F51',
+							invest: 10000
+						},
+						{
+							secondName: 'S52',
+							firstName: 'F52',
+							invest: 15000
+						},
+						{
+							secondName: 'S53',
+							firstName: 'F53',
+							invest: 5000
+						}
+					],
+					developYear: 1998,
+					price: 240000
+				},
+			]
+			// console.log(webSitesList);
+
+			//Робимо обчислення та виводимо результат
+
+			//===========================================1====================================================
+
+			let totalSitesSum = webSitesList.reduce(
+				(prevSum, site) => prevSum + site.price,
+				0)
+			console.log(totalSitesSum);
+
+			//==========================================2=====================================================
+
+			let sitesYounfer_2009AndOlder_2000Quantity = webSitesList.reduce(
+				(prevSum, site) =>
+					(site.developYear>2000 && site.developYear<2009 ? ++prevSum:prevSum),
+				0
+			)
+			console.log(sitesYounfer_2009AndOlder_2000Quantity);
+
+			//=========================================3======================================================
+
+			let sitesSponsorsInvestOwer_100000Quantity = webSitesList.reduce(
+				(prevSum, site) =>
+					(site.sponsors.reduce((prevSum, investment)=>prevSum+investment.invest,0)>100000 ? ++prevSum:prevSum),
+				0
+			)
+			 console.log(sitesSponsorsInvestOwer_100000Quantity);
+
+			//=========================================4======================================================
+
+			let listSponsors =[]
+			for (const site of webSitesList) {
+				for (const sponsor of site.sponsors) {
+					listSponsors.push(sponsor.secondName, sponsor.firstName, sponsor.invest)
+				}
+			}
+			console.log(listSponsors);
+			//=========================================5======================================================
+				let searchYear
+				let siteWithMaxPrice = webSitesList[0].price
+				for (const site of webSitesList) {
+					if(site.price>siteWithMaxPrice){
+						searchYear = site.developYear
+						siteWithMaxPrice = site.price
+					}
+				}
+				console.log(searchYear);
+
+				//======================================6======================================================
+
+				let newObj = JSON.parse(JSON.stringify(webSitesList))
+				let sortedObjectBylowingPrice = newObj.sort((el1,el2)=>el2.price-el1.price)
+				console.log(sortedObjectBylowingPrice);
+				//======================================7======================================================
+
+				let objWithSitesHigher_100000 = newObj.filter(site=>site.price>100000)
+				let objWithSitesLower_100000 = newObj.filter(site=>site.price<100000)
+				console.log(objWithSitesHigher_100000,objWithSitesLower_100000);
+		</script>
+	</body>
+</html>

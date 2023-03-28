@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 1</h1>
+		<p>Дано масив 30 випадкових цілих чисел. Підрахувати скільки було обмінів під час сортування бульбашкою</p>
+		<script>
+			// 1.Створюємо масив з 30 випадковими числами за допомогою функції
+			const minArrValue = 1
+			const maxArrValue = 1000
+			const currentArrLength = 30
+
+			function generateRandomNumber(minValue, MaxValue) {
+				return minArrValue + Math.floor(Math.random()*maxArrValue)
+			}
+
+			function generateRandomArray(ArrLength, minValue, MaxValue) {
+				const userArr = []
+				for (let i = 0; i < ArrLength; i++) {
+					const randomNumber = generateRandomNumber(minValue, MaxValue)
+					userArr.push(randomNumber)					
+				}
+				return userArr
+			}
+
+
+			let currentArr = generateRandomArray(currentArrLength, minArrValue, maxArrValue)
+			
+			// console.log(currentArr);
+
+			// 2. Робимо обчислення та виводимо результат 
+			function getArrElementChages(arr) {
+				let changeCounting = 0
+				let changed
+				do {
+					changed = false
+					for (let i = 1; i < arr.length; i++) {
+				if (arr[i]>arr[i-1]) {
+					let temp = arr[i-1]
+					arr[i-1] = arr[i]
+					arr[i] = temp
+					changed = true
+					changeCounting++
+					}
+				}
+				} while (changed)
+				return changeCounting
+			}
+			
+
+			let arrElementChages = getArrElementChages(currentArr)
+			document.write(`<p>${arrElementChages}</p>`)
+			// console.log(arrElementChages);
+		</script>
+	</body>
+</html>

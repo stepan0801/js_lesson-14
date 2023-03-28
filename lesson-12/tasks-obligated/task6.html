@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 6</h1>
+		<p> Дано масив імен. Застосовуючи відповідне сортування та бінарний пошук визначити, чи є у масиві ім’я довжиною 5 символів і під яким індексом.</p>
+		<script>
+			// 1. Вводимо необхідні дані
+			let arrNameList = ['Steven','Drew','Johny','Olga','Brad','Sara','Michael']
+			const searcheNameLength_5 = 5
+
+			function getArrElementChanges(arr){
+				let changeCounting = 0
+				for (let k = 0; k < arr.length; k++) {
+					const currentElement = arr[k];
+					let i = k-1
+					while (i>=0 && arr[i]>currentElement) {
+						arr[i+1] = arr[i]
+						i=i-1
+						
+					}
+					arr[i+1] = currentElement
+					
+				}
+				return arr
+			}
+			let nameListSorted = getArrElementChanges(arrNameList)
+			console.log(nameListSorted);
+			// 2. Робимо обчислення та виводимо результат 
+			function getBinarySearche(arr, searcheElement) {
+				let start = 0
+				let end = arr.length-1
+				while (start<=end) {
+					const middle = Math.floor((start+end)/2)
+					if (arr[middle].length===searcheNameLength_5) return middle
+					if (arr[middle].length<searcheNameLength_5) start = middle+1
+					if (arr[middle].length>searcheNameLength_5) end = middle-1
+				}
+				return false
+			}
+
+			let searcheElementLength_5 = getBinarySearche(nameListSorted,searcheNameLength_5)
+			console.log(searcheElementLength_5);
+		</script>
+	</body>
+</html>

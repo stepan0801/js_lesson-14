@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 2</h1>
+		<p>Розробити функцію, у яку передають об’єкт (день, місяць, рік). Визначити, який буде рік через N місяців.</p>
+		<script>
+			//ВВодимо необхідні дані
+			let currentDate = {
+				day: 27,
+				month: 3,
+				year: 2023
+			}
+			const monthInYear = 12
+			let N = parseInt(prompt('Введіть кількість місяців до поточної дати'))
+
+			//Сворюємо функцію
+
+			function getCurrentYear(someDate, N) {
+				someDate.month = someDate.month + N
+				while (someDate.month>=12) {
+					someDate.month = someDate.month - monthInYear
+					someDate.year = someDate.year+1
+				}
+				return someDate.year
+			}
+			// console.log(getCurrentYear(currentDate, N));
+
+			//Виводимо результат
+
+			let currentYear = getCurrentYear(currentDate, N)
+			document.write(`<p>Через ${N} місяців буде ${currentYear} рік</p>`)
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 1</h1>
+		<p>Нехай х0 = 1, хІ = хІ-1 + 2І, де І=1,2,.... Визначити х10. Розв’язати з використанням рекурсивних і нерекурсивних алгоритмів</p>
+		<script>
+
+			const finishNumber = 10
+
+			// рекурсивний метод
+			function getRecurs(i) {
+				if (i===0) return 1
+				else return getRecurs(i-1) + 2*i
+			}
+	let res1 = getRecurs(finishNumber)
+	// console.log(res1);
+
+			// нерекурсивний метод
+
+			function getNotRecurs(i) {
+				let  x = 1
+				for (let i = 1; i <= finishNumber; i++) {
+					x = x + 2*i
+				}
+				return x
+			}
+			
+			let res2 = getNotRecurs(finishNumber)
+			// console.log(res2);
+
+			document.write(`<p>Результат рекурсивного методу: ${res1}</p>`)
+			document.write(`<p>Результат нерекурсивного методу: ${res2}</p>`)
+		</script>
+	</body>
+</html>

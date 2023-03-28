@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача 2</h1>
+		<p>Нехай х0 = х1 = 1, хІ = хІ-1 + 2хІ-2, де І=1,2,.... Визначити хN. Розв’язати з використанням рекурсивних і нерекурсивних алгоритмів</p>
+		<script>
+			const n = parseInt(prompt('Введіть число n для обчислення формули'))
+
+			// рекурсивний метод
+			function getRecurs(i) {
+				if (i===0||i===1) return  1
+				else return getRecurs(i-1) + 2*getRecurs(i-2)
+			}
+	let res1 = getRecurs(n)
+	// console.log(res1);
+
+			// нерекурсивний метод
+
+			function getNotRecurs(i) {
+				let  x = 1
+				let x_1 = 1
+				for (let i = 2; i <= n; i++) {
+					let temp = x
+					x = x + 2*x_1
+					x_1 = temp
+				}
+				return x
+			}
+			
+			let res2 = getNotRecurs(n)
+			// console.log(res2);
+
+			document.write(`<p>Результат рекурсивного методу: ${res1}</p>`)
+			document.write(`<p>Результат нерекурсивного методу: ${res2}</p>`)
+		</script>
+	</body>
+</html>

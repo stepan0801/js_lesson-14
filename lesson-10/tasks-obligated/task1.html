@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../css/style.css">
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>Задача</h1>
+		<p>Дано історію цін на цінні папери за деякий період (згенерувати від 1 до 10000) <br>
+			1)Сформувати новий масив, у якому є тільки ті, що більші за 1000 грн.<br>
+			2)Сформувати новий масив, у якому є номери тільки тих, що більші за 1000 грн.<br>
+			3)Сформувати список з тих цін, які більші за попереднє значення<br>
+			4)Сформувати новий масив, що міститиме значення цін у відсотках стосовно максимального<br>
+			5)Підрахувати кількість змін цін<br>
+			6)Визначити, чи є ціна, що менше 1000<br>
+			7)Визначати, чи усі ціни більше за 1000<br>
+			8)Підрахувати кількість цін, що більше за 1000<br>
+			9)Підрахувати суму цін, що більше за 1000<br>
+			10)Знайти першу ціну, що більше за 1000<br>
+			11)Знайти індекс першої ціни, що більше за 1000<br>
+			12)Знайти останню ціну, що більше за 1000<br>
+			13)Знайти індекс останньої ціни, що більше за 1000<br>
+		</p>
+		<script>
+			// 1. Вводимо необхідні дані
+			const minSecuritiesPrice = 1
+			const maxSecuritiesPrice = 10000
+
+			let userInputPeriod = parseInt(prompt('Введіть кількість місяців періоду, за яки Ви хочете отримати дані'))
+
+			function getSecuritiesPricesPeriod(period) {
+				let securitiesPriceMonth = []
+				for (let i = 0; i < userInputPeriod; i++) {
+					securitiesPriceMonth.push(minSecuritiesPrice + Math.floor(Math.random()*maxSecuritiesPrice))
+				}
+				return securitiesPriceMonth
+			}
+
+			let securitiesPricesPeriod = getSecuritiesPricesPeriod(userInputPeriod)
+
+			// 2. Робимо обчислення та виводимо результат 
+
+			//===================================1=================================================
+			const securitiesPricesBiggerThan_1000 = securitiesPricesPeriod.filter(elements => elements>1000)
+
+			//===================================2=================================================
+			const securitiesIndexesBiggerThan_1000 = securitiesPricesPeriod.map((element, index) => index).filter(index => securitiesPricesPeriod[index]>1000)
+
+			//===================================3=================================================
+			const securitiesPricesBiggerThanPrev = securitiesPricesPeriod.filter((element, index, arr) => element>securitiesPricesPeriod[index-1])
+
+			//===================================4=================================================
+			const maxValueSecuritiesPricesPeriod = Math.max(...securitiesPricesPeriod)
+			const securitiesPricesInPercentsToMaxValue = securitiesPricesPeriod.map(element => Math.ceil(element/maxValueSecuritiesPricesPeriod*100))
+
+			//===================================5=================================================
+			const changesPricesQuantity = securitiesPricesPeriod.reduce((prev, element, index, arr) => element !== arr[index+1] ? ++prev : prev,0) 
+
+			//===================================6=================================================
+			const isSecuritiesPricesSmaler_1000 = securitiesPricesPeriod.reduce((prev, element) => element <1000 ? 'Так, є' : 'Ні, немає','') 
+
+			//===================================7=================================================
+			const isEveryecuritiesPricesBigger_1000 = securitiesPricesPeriod.every(element => element >1000)
+			let isEveryecuritiesPricesBigger_1000Result 
+			if(isEveryecuritiesPricesBigger_1000 === true) isEveryecuritiesPricesBigger_1000Result = 'Так, всі'
+			else isEveryecuritiesPricesBigger_1000Result = 'Ні, не всі'
+
+			//===================================8=================================================
+			const SecuritiesPricesBigger_1000Quantity = securitiesPricesPeriod.reduce((prev, element) => element >1000 ? ++prev : prev,0)
+
+			//===================================9=================================================
+			const SecuritiesPricesBigger_1000Sum = securitiesPricesPeriod.reduce((prev, element) => element >1000 ? prev + element: prev,0)
+
+			//===================================10=================================================
+			const SecuritiesPricesFirstElementBigger_1000 = securitiesPricesPeriod.find(element => element >1000)
+
+			//===================================11=================================================
+			const SecuritiesPricesFirstIndexBiggerThan_1000 = securitiesPricesPeriod.findIndex(element => element >1000)
+
+			//===================================12=================================================
+			const SecuritiesPricesLastElementBigger_1000 = securitiesPricesPeriod.findLast(element => element >1000)
+
+			//===================================13=================================================
+			const SecuritiesPricesLastIndexBiggerThan_1000 = securitiesPricesPeriod.findLastIndex(element => element >1000)
+
+			document.write(`<p>${securitiesPricesPeriod}</p>`)
+			document.write(`<ol class="list-lesson-10">
+									<li class="list-lesson-10__item">масив, у якому є тільки ті, що більші за 1000 грн.: <span>${securitiesPricesBiggerThan_1000}</span></li>
+									<li class="list-lesson-10__item">масив, у якому є номери тільки тих, що більші за 1000 грн.: <span>${securitiesIndexesBiggerThan_1000}</span></li>
+									<li class="list-lesson-10__item">список з тих цін, які більші за попереднє значення: <span>${securitiesPricesBiggerThanPrev}</span></li>
+									<li class="list-lesson-10__item">масив, що містить значення цін у відсотках стосовно максимального: <span>${securitiesPricesInPercentsToMaxValue}</span></li>
+									<li class="list-lesson-10__item">кількість змін цін: <span>${changesPricesQuantity}</span></li>
+									<li class="list-lesson-10__item">чи є ціна, що менше 1000: <span>${isSecuritiesPricesSmaler_1000}</span></li>
+									<li class="list-lesson-10__item">чи усі ціни більше за 1000: <span>${isEveryecuritiesPricesBigger_1000Result}</span></li>
+									<li class="list-lesson-10__item">кількість цін, що більше за 1000: <span>${SecuritiesPricesBigger_1000Quantity}</span></li>
+									<li class="list-lesson-10__item">сума цін, що більше за 1000: <span>${SecuritiesPricesBigger_1000Sum}</span></li>
+									<li class="list-lesson-10__item">перша цінуа, що більше за 1000: <span>${SecuritiesPricesFirstElementBigger_1000}</span></li>
+									<li class="list-lesson-10__item">індекс першої ціни, що більше за 1000: <span>${SecuritiesPricesFirstIndexBiggerThan_1000}</span></li>
+									<li class="list-lesson-10__item">остання ціна, що більше за 1000:<span> ${SecuritiesPricesLastElementBigger_1000}</span></li>
+									<li class="list-lesson-10__item">індекс останньої ціни, що більше за 1000: <span>${SecuritiesPricesLastIndexBiggerThan_1000}</span></li>
+								</ol>`)
+		</script>
+	</body>
+</html>
